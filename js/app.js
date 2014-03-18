@@ -1,3 +1,7 @@
+// ------------------
+// BASE APP
+// ------------------
+
 App = Ember.Application.create({
   LOG_TRANSITIONS: true,
   LOG_BINDINGS: true,
@@ -7,16 +11,30 @@ App = Ember.Application.create({
   debugMode: true
 });
 
+
+// --------------------
+// INIT THE DATA STORE
+// --------------------
+
 App.Store = DS.Store.extend({
   revision: 1,
   adapter: DS.FixtureAdapter
 });
 
+
+// --------------------
+// ROUTER
+// --------------------
+
 App.Router.map(function() {
   this.route('home');
-  this.resource('lineups');
+  this.resource('lineups', {path: '/lineups'});
   this.resource('lineup', {path: "/lineups/:lineup_id"});
 });
+
+// --------------------
+// ROUTES
+// --------------------
 
 App.LineupsRoute = Ember.Route.extend({
   model: function(){
@@ -35,6 +53,11 @@ App.IndexRoute = Ember.Route.extend({
     this.transitionTo('lineups');
   }
 });
+
+
+// --------------------
+// MODELS
+// --------------------
 
 App.Lineup = DS.Model.extend({
   title: DS.attr('string')

@@ -10,6 +10,7 @@
 </head>
 <body>
 
+  <!-- APPLICATION TEMPLATE -->
   <script type="text/x-handlebars">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -38,6 +39,7 @@
     </div>
   </script>  
 
+  <!-- LINEUPS INDEX TEMPLATE -->
   <script type="text/x-handlebars" data-template-name="lineups">
     <h1>Lineups</h1>
     <ul>
@@ -47,10 +49,21 @@
     </ul>
   </script>
 
+  <!-- LINEUPS CREATE TEMPLATE -->
+  <script type="text/x-handlebars" data-template-name="lineups.create">
+    <h1>Create a lineup</h1>
+    {{input name='title' value=title}}
+  </script>
+
+  <!-- LINEUPS SHOW TEMPLATE -->
   <script type="text/x-handlebars" data-template-name="lineup">
     <h1>{{ title }}</h4>
   </script>
 
+
+
+
+  <!-- JS -->
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.4.0.js"></script>
