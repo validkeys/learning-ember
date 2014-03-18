@@ -52,6 +52,17 @@ App.IndexRoute = Ember.Route.extend
   redirect: ->
     @transitionTo "lineups"
 
+
+# --------------------
+# CONTROLLERS
+# --------------------
+
+App.LineupsController = Ember.ArrayController.extend
+  sortProperties:   ['created_at']
+  sortAscending:    false
+
+
+
 # --------------------
 # MODELS
 # --------------------
