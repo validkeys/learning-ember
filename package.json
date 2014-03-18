@@ -1,0 +1,24 @@
+{
+  "name": "SimpleAdRotator",
+  "description": "Mobile Ad",
+  "version": "1.0.0",
+  "author": {
+    "name": "Pressly",
+    "url": "http://www.pressly.com/"
+  },
+  "homepage": "http://www.pressly.com/",
+
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "3.5.5",
+    "coffee-script":"1.7.1",
+    "gulp-coffee":"1.4.1",
+    "gulp-stylus":"0.0.14",
+    "gulp-watch":"0.5.2",
+    "path":"0.4.9",
+    "gulp-connect":"1.0.7"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

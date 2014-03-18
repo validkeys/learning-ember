@@ -31,20 +31,24 @@
         </div>
       </div>
     </div>
-
     <div class="container">
-
-      {{ outlet }}
-
+      <div class="starter-template">
+        {{ outlet }}
+      </div>
     </div>
-  </script>  
+  </script>
+
+
 
   <!-- LINEUPS INDEX TEMPLATE -->
   <script type="text/x-handlebars" data-template-name="lineups">
     <h1>Lineups</h1>
     <ul>
     {{#each}}
-      <li>{{#link-to 'lineup' this}}{{title}}{{/link-to}}</li>
+      <li>
+        {{#link-to 'lineup' this}}{{title}}{{/link-to}}
+        <strong>Created: {{ created_at }}
+      </li>
     {{/each}}
     </ul>
   </script>
@@ -58,21 +62,18 @@
   <!-- LINEUPS SHOW TEMPLATE -->
   <script type="text/x-handlebars" data-template-name="lineup">
     <h1>{{ title }}</h4>
+    <p>{{description}}</p>
   </script>
 
 
 
 
   <!-- JS -->
-  <script src="js/libs/jquery-1.10.2.js"></script>
-  <script src="js/libs/handlebars-1.1.2.js"></script>
-  <script src="js/libs/ember-1.4.0.js"></script>
-  <script src="http://builds.emberjs.com/canary/ember-data.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/handlebars.js"></script>
+  <script src="js/ember.js"></script>
+  <script src="js/ember-data.js"></script>
   <script src="js/app.js"></script>
 
-
-
-  <!-- to activate the test runner, add the "?test" query string parameter -->
-  <script src="tests/runner.js"></script>
 </body>
 </html>
