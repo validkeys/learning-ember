@@ -64,12 +64,12 @@
     <h1>{{ title }}</h4>
     <strong>Created: {{ created_at }}</strong>
     <p>{{description}}</p>
-    
+
     <hr />
 
     <h3>Curators</h3>
     {{#each curators}}
-      <p>{{ user_id }}</p>
+      <p>{{ user.first_name }} {{ user.last_name }}</p>
     {{/each}}
 
     <hr />
@@ -78,6 +78,10 @@
 
   </script>
 
+  <script type="text/x-handlebars" data-template-name="loading">
+    <h1>Loading...</h1>
+    <em>This is the application loading template</em>
+  </script>
 
 
 
@@ -86,6 +90,7 @@
   <script src="js/handlebars.js"></script>
   <script src="js/ember.js"></script>
   <script src="js/ember-data.js"></script>
+  <script src="js/lineups_fixtures.js"></script>
   <script src="js/app.js"></script>
 
 </body>
