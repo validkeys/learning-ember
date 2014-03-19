@@ -76,6 +76,11 @@
 
     <p>Score: {{ cached_votes_score }}</p>
 
+    <h3>Backdrops:</h3>
+    {{#each backdrops}}
+      <img src="http://images.cdn.kushapp.com/" width="100px" />
+    {{/each}}
+
   </script>
 
   <script type="text/x-handlebars" data-template-name="loading">
