@@ -520,18 +520,24 @@
 	"buffers":
 	[
 		{
+			"contents": "<!DOCTYPE html>\n<html>\n<head>\n  <meta charset=\"utf-8\">\n  <title>Ember Starter Kit</title>\n  <link rel=\"stylesheet\" href=\"css/normalize.css\">\n  <link rel=\"stylesheet\" href=\"css/style.css\">\n  <link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css\">\n  <link rel=\"stylesheet\" href=\"http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css\">\n</head>\n<body>\n\n  <!-- APPLICATION TEMPLATE -->\n  <script type=\"text/x-handlebars\">\n    <div class=\"navbar navbar-inverse navbar-fixed-top\" role=\"navigation\">\n      <div class=\"container\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n            <span class=\"sr-only\">Toggle navigation</span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n            <span class=\"icon-bar\"></span>\n          </button>\n          <a class=\"navbar-brand\" href=\"#\">Project name</a>\n        </div>\n        <div class=\"collapse navbar-collapse\">\n          <ul class=\"nav navbar-nav\">\n            <li>{{#link-to 'home'}}Home{{/link-to}}</li>\n            <li>{{#link-to 'lineups'}}Lineups{{/link-to}}</li>\n          </ul>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"container\">\n\n      {{ outlet }}\n\n    </div>\n  </script>  \n\n  <!-- LINEUPS INDEX TEMPLATE -->\n  <script type=\"text/x-handlebars\" data-template-name=\"lineups\">\n    <h1>Lineups</h1>\n    <ul>\n    {{#each}}\n      <li>{{#link-to 'lineup' this}}{{title}}{{/link-to}}</li>\n    {{/each}}\n    </ul>\n  </script>\n\n  <!-- LINEUPS CREATE TEMPLATE -->\n  <script type=\"text/x-handlebars\" data-template-name=\"lineups.create\">\n    <h1>Create a lineup</h1>\n    {{input name='title' value=title}}\n  </script>\n\n  <!-- LINEUPS SHOW TEMPLATE -->\n  <script type=\"text/x-handlebars\" data-template-name=\"lineup\">\n    <h1>{{ title }}</h4>\n  </script>\n\n\n\n\n  <!-- JS -->\n  <script src=\"js/libs/jquery-1.10.2.js\"></script>\n  <script src=\"js/libs/handlebars-1.1.2.js\"></script>\n  <script src=\"js/libs/ember-1.4.0.js\"></script>\n  <script src=\"http://builds.emberjs.com/canary/ember-data.js\"></script>\n  <script src=\"js/app.js\"></script>\n\n\n\n  <!-- to activate the test runner, add the \"?test\" query string parameter -->\n  <script src=\"tests/runner.js\"></script>\n</body>\n</html>\n",
 			"file": "index.html",
+			"file_size": 2337,
+			"file_write_time": 1395111989000000,
 			"settings":
 			{
-				"buffer_size": 2033,
+				"buffer_size": 2337,
 				"line_ending": "Unix"
 			}
 		},
 		{
+			"contents": "// ------------------\n// BASE APP\n// ------------------\n\nApp = Ember.Application.create({\n  LOG_TRANSITIONS: true,\n  LOG_BINDINGS: true,\n  LOG_VIEW_LOOKUPS: true,\n  LOG_STACKTRACE_ON_DEPRECATION: true,\n  LOG_VERSION: true,\n  debugMode: true\n});\n\n\n// --------------------\n// INIT THE DATA STORE\n// --------------------\n\nApp.Store = DS.Store.extend({\n  revision: 1,\n  adapter: DS.FixtureAdapter\n});\n\n\n// --------------------\n// ROUTER\n// --------------------\n\nApp.Router.map(function() {\n  this.route('home');\n  this.resource('lineups', {path: '/lineups'});\n  this.resource('lineup', {path: \"/lineups/:lineup_id\"});\n});\n\n// --------------------\n// ROUTES\n// --------------------\n\nApp.LineupsRoute = Ember.Route.extend({\n  model: function(){\n    return this.store.find('lineup');\n  }\n});\n\nApp.LineupRoute = Ember.Route.extend({\n  model: function(params){\n    return this.store.find('lineup', params.lineup_id);\n  }\n});\n\nApp.IndexRoute = Ember.Route.extend({\n  redirect: function(){\n    this.transitionTo('lineups');\n  }\n});\n\n\n// --------------------\n// MODELS\n// --------------------\n\nApp.Lineup = DS.Model.extend({\n  title: DS.attr('string')\n});\n\nApp.Lineup.FIXTURES = [\n  {\n    id: 1,\n    title: \"First Lineup\"\n  },\n  {\n    id: 2,\n    title: \"Second Lineup\"\n  }\n];",
 			"file": "js/app.js",
+			"file_size": 1263,
+			"file_write_time": 1395112151000000,
 			"settings":
 			{
-				"buffer_size": 1243,
+				"buffer_size": 1263,
 				"line_ending": "Unix"
 			}
 		}
@@ -981,15 +987,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 2033,
+						"buffer_size": 2337,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1616,
-								1616
+								58,
+								58
 							]
 						],
 						"settings":
@@ -999,7 +1005,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 53.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1015,15 +1021,15 @@
 					"file": "js/app.js",
 					"settings":
 					{
-						"buffer_size": 1243,
+						"buffer_size": 1263,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1036,
-								1036
+								553,
+								553
 							]
 						],
 						"settings":
@@ -1069,7 +1075,7 @@
 		"cols":
 		[
 			0.0,
-			0.368759197542,
+			0.55258559124,
 			1.0
 		],
 		"rows":

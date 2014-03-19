@@ -12,14 +12,16 @@ App = Ember.Application.create
 # --------------------
 # INIT THE DATA STORE
 # --------------------
-DS.RESTAdapter.reopen
-  url:      'http://localhost:3000'
+App.ApplicationAdapter = DS.RESTAdapter.extend
+  host: 'http://localhost:3000'
   headers:
     "Authorization": "Token token=74477f01461f16cfcd52a6a01f2fdff7"
-#
-App.Store = DS.Store.extend
-  revision: 1
-  adapter:  DS.RESTAdapter
+
+App.ApplicationSerializer = DS.ActiveModelSerializer.extend({});    
+
+# App.Store = DS.Store.extend
+#   revision: 1
+#   adapter:  App.ApplicationAdapter
 
 
 # --------------------
@@ -33,8 +35,6 @@ App.Router.map ->
 
   @resource "lineup",
     path: "/lineups/:lineup_id"
-
-  return
 
 
 # --------------------
@@ -63,9 +63,13 @@ App.LineupsController = Ember.ArrayController.extend
 
 
 
+
 # --------------------
 # MODELS
 # --------------------
+
+
+# Ember.Inflector.inflector.irregular('curator', 'curators')
 
 App.Lineup = DS.Model.extend
   title:                      DS.attr "string"
@@ -85,3 +89,12 @@ App.Lineup = DS.Model.extend
   published:                  DS.attr "boolean"
   published_date:             DS.attr "date"
   recommendations_count:      DS.attr "number"
+  curators:                   DS.hasMany "curator", async: true
+
+
+App.Curator = DS.Model.extend
+  accepted:   DS.attr "boolean"
+  created_at: DS.attr "date"
+  owner:      DS.attr "boolean"
+  lineup:     DS.belongsTo "lineup"
+
