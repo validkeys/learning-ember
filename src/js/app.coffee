@@ -183,7 +183,12 @@ App.LineupsController = Ember.ArrayController.extend
   sortProperties:   ['created_at']
   sortAscending:    false
 
+
+# THIS CAN REPLACE THE ENTIRE TEMPLATE
+# BECAUSE ALL IM SHOWING IS JUST AN IMAGE TAG IN THE TEMPLATE
 App.BackdropImageComponent = Ember.Component.extend
+  tagName:            "img"
+  attributeBindings: ["src:alias"]
   path:( ->
     "http://images.cdn.kushapp.com/media/movies/" + @get("medium_id") + "/backdrops/w" + @get("width") + @get("file_path")
   ).property 'file_path', 'medium_id'
