@@ -84,14 +84,27 @@
     <h3>Selections</h3>
     <ul>
     {{#each selections}}
-      <li>{{log this}}</li>
+      <li>
+        {{ poster-image file_path=medium.poster width="154" medium_id=medium.id}}
+        {{#link-to "medium" this.medium }}{{medium.title}}{{/link-to}}
+      </li>
     {{/each}}
     </ul>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="medium">
+    <h4>{{title}}</h4>
+    {{ poster-image file_path=poster width="154" medium_id=id}}
+    {{ backdrop-image file_path=backdrop width="300" medium_id=id}}
   </script>
 
   <script type="text/x-handlebars" data-template-name="components/backdrop-image">
     <img {{bind-attr src=path }} width="100" />
   </script>
+
+  <script type="text/x-handlebars" data-template-name="components/poster-image">
+    <img {{bind-attr src=path }} width="100" />
+  </script>  
 
   <script type="text/x-handlebars" data-template-name="loading">
     <h1>Loading...</h1>

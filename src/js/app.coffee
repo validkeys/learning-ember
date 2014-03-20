@@ -18,6 +18,13 @@ App.ApplicationAdapter = DS.RESTAdapter.extend
   headers:
     "Authorization": "Token token=74477f01461f16cfcd52a6a01f2fdff7"
 
+ DS.RESTAdapter.reopen
+  pathForType: (type) ->
+    switch type
+      when "medium"
+        "movies"
+      else
+        @_super(type)
 
 # --------------------
 # NOTE:
@@ -132,6 +139,8 @@ App.Router.map ->
   @resource "lineup", path: "/lineups/:lineup_id", ->
     @route "curators"
 
+  @resource "medium", path: "/media/:medium_id"
+
 
 # --------------------
 # ROUTES
@@ -170,6 +179,11 @@ App.LineupRoute   = App.LoadMoreRoute.extend
   model: (params) ->
     @store.find "lineup", params.lineup_id
 
+App.MediumRoute    = App.LoadMoreRoute.extend
+  model: (params) ->
+    console.log "HERE------------------------"
+    @store.find "medium", params.medium_id
+
 App.IndexRoute    = App.BaseRoute.extend
   redirect: ->
     @transitionTo "lineups"
@@ -188,12 +202,18 @@ App.BackdropImageComponent = Ember.Component.extend
     "http://images.cdn.kushapp.com/media/movies/" + @get("medium_id") + "/backdrops/w" + @get("width") + @get("file_path")
   ).property 'file_path', 'medium_id'
 
+App.PosterImageComponent = Ember.Component.extend
+  path:( ->
+    "http://images.cdn.kushapp.com/media/movies/" + @get("medium_id") + "/posters/w" + @get("width") + @get("file_path")
+  ).property 'file_path', 'medium_id'  
+
 
 
 # --------------------
 # MODELS
 # --------------------
 
+# Ember.Inflector.inflector.irregular('medium', 'media');
 
 App.User = DS.Model.extend
   first_name: DS.attr "string"
@@ -206,13 +226,27 @@ App.Curator = DS.Model.extend
   lineup:     DS.belongsTo "lineup"
   user:       DS.belongsTo "user"
 
+App.Trailer = DS.Model.extend
+  provider:     DS.attr "string"
+  source:       DS.attr "string"
+  size:         DS.attr "string"
+  medium_id:    DS.attr "number"
+  name:         DS.attr "string"
+  created_at:   DS.attr "date"
+
 App.Medium = DS.Model.extend
-  api_id: DS.attr "number"
-  backdrop: DS.attr "string"
-  poster: DS.attr "string"
+  api_id:       DS.attr "number"
+  backdrop:     DS.attr "string"
+  poster:       DS.attr "string"
   release_date: DS.attr "date"
-  title: DS.attr "string"
-  type: DS.attr "type"
+  title:        DS.attr "string"
+  type:         DS.attr "string"
+  overview:     DS.attr "string"
+  runtime:      DS.attr "number"
+  status:       DS.attr "string"
+  tagline:      DS.attr "string"
+  trailers:     DS.hasMany "trailer"
+
 
 App.Selection = DS.Model.extend
   created_at: DS.attr "date"
