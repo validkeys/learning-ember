@@ -198,19 +198,26 @@ App.LineupsController = Ember.ArrayController.extend
   sortAscending:    false
 
 
-# THIS CAN REPLACE THE ENTIRE TEMPLATE
-# BECAUSE ALL IM SHOWING IS JUST AN IMAGE TAG IN THE TEMPLATE
+# --------------------
+# COMPONENTS
+# --------------------
+
 App.BackdropImageComponent = Ember.Component.extend
   tagName:            "img"
-  attributeBindings: ["src:alias"]
-  path:( ->
+  attributeBindings: ["src","width"]
+  width:(->
+    @get "width"
+  ).property 'width'
+  src:( ->
     "http://images.cdn.kushapp.com/media/movies/" + @get("medium_id") + "/backdrops/w" + @get("width") + @get("file_path")
   ).property 'file_path', 'medium_id'
 
 App.PosterImageComponent = Ember.Component.extend
-  path:( ->
+  tagName:   "img"
+  attributeBindings: ["src"]
+  src:( ->
     "http://images.cdn.kushapp.com/media/movies/" + @get("medium_id") + "/posters/w" + @get("width") + @get("file_path")
-  ).property 'file_path', 'medium_id'  
+  ).property 'file_path', 'medium_id'
 
 
 
