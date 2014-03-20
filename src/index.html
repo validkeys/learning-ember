@@ -78,9 +78,19 @@
 
     <h3>Backdrops:</h3>
     {{#each backdrops}}
-      <img src="http://images.cdn.kushapp.com/" width="100px" />
+      {{ backdrop-image file_path=file_path width="780" medium_id=medium_id}}
     {{/each}}
 
+    <h3>Selections</h3>
+    <ul>
+    {{#each selections}}
+      <li>{{log this}}</li>
+    {{/each}}
+    </ul>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="components/backdrop-image">
+    <img {{bind-attr src=path }} width="100" />
   </script>
 
   <script type="text/x-handlebars" data-template-name="loading">
@@ -95,7 +105,6 @@
   <script src="js/handlebars.js"></script>
   <script src="js/ember.js"></script>
   <script src="js/ember-data.js"></script>
-  <script src="js/lineups_fixtures.js"></script>
   <script src="js/app.js"></script>
 
 </body>
