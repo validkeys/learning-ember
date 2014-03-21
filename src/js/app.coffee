@@ -202,14 +202,41 @@ App.LoadMoreRoute = App.BaseRoute.extend
 
 App.LineupsRoute  = App.BaseRoute.extend
   model: ->
+
+    # NOTE:
+    #      To make a GET request for all records from the server:
+    #       :: this.store.find('model-name') //-> network request
+    #      To get a list of just the records already in the store
+    #       :: this.store.all('model-name') //-> no network request
+
     @store.find "lineup"
+
+# EXAMPLE: Filtering
+# -------------------
+# Let's say that I wanted to have a lineups/published route
+# that would only show me the published lineups
+# (assuming you've created the route in your router)
+# ------
+# App.LineupsPublishedRoute = App.BaseRoute.extend({
+#   model: function(){
+#     return this.store.filter('lineup', function(lineup){
+#       return lineup.get('published');
+#     });
+#   }
+# });
+# ------
+
 
 App.LineupRoute   = App.LoadMoreRoute.extend
   model: (params) ->
+
+    # We can pass in query params like this:
+    #   ::-> this.store.find('lineup', { published: true })
+
     @store.find "lineup", params.lineup_id
 
 App.LineupNewRoute = App.BaseRoute.extend
-  
+
   setupController: (controller, model) ->
     @controller.set 'model', @store.createRecord 'post'
 
@@ -228,13 +255,25 @@ App.IndexRoute    = App.BaseRoute.extend
 # --------------------
 
 App.LineupsController = Ember.ArrayController.extend
+
+  # NOTE:
+  #      if i depended on another controller
+  # --------------------------
+  # needs: ['comment'] //ie. the CommentController
+  # --------------------------
+  #      I could then alias it to a computed property
+  # --------------------------
+  # comment: Ember.computed.alias('controllers.post')
+  # --------------------------
+
+
   sortProperties:   ['created_at']
   sortAscending:    false
 
 App.LineupNewController = Ember.ObjectController.extend
 
   title: ''
-  
+
   actions:
     submitForm: ->
       unless @get("title").length is 0
@@ -285,6 +324,35 @@ App.PosterImageComponent = Ember.Component.extend
 
 # Ember.Inflector.inflector.irregular('medium', 'media');
 
+
+# NOTES:
+#       -> Creating Records
+#       -------------------
+#         var post = store.createRecord('post', { attrs... })
+#         post.save().then -> (persists then acts on promise)
+#
+#       -> Deleting Records
+#       -------------------
+#         OPTION: 1
+#                 post.deleteRecord()
+#                 post.get('isDeleted') #=> true
+#                 post.save()
+#         OPTION: 2
+#                 post.destroyRecord() // persists immediately
+#
+#
+#        If you've got model data and want to add it to the store
+#         (ex. bootstrapped data)
+#         post = {title: "My Bootstrapped Post"}
+#         this.store.push('post', post)
+
+
+# ---------
+# TIP: put DS.attr, hasMany and belongsTo into vars:
+#      var attr = Ds.attr, belongsTo = DS.belongsTo, hasMany = DS.hasMany
+#      then: first_name: attr('string')
+#      then: user: belongsTo('user')
+
 App.User = DS.Model.extend
   first_name: DS.attr "string"
   last_name:  DS.attr "string"
@@ -332,16 +400,23 @@ App.Lineup = DS.Model.extend
   cached_votes_up:            DS.attr "number"
   comments_count:             DS.attr "number"
   created_at:                 DS.attr "date"
-  creation_status_percentage: DS.attr "number"
-  curators_count:             DS.attr "number"
+  creation_status_percentage: DS.attr "number",
+    defaultValue: 0
+  curators_count:             DS.attr "number",
+    defaultValue: 1
   date_featured:              DS.attr "date"
   description:                DS.attr "string"
-  featured:                   DS.attr "boolean"
-  item_themes_count:          DS.attr "number"
-  lineup_media_count:         DS.attr "number"
-  published:                  DS.attr "boolean"
+  featured:                   DS.attr "boolean",
+    defaultValue: false
+  item_themes_count:          DS.attr "number",
+    defaultValue: 0
+  lineup_media_count:         DS.attr "number",
+    defaultValue: 0
+  published:                  DS.attr "boolean",
+    defaultValue: false
   published_date:             DS.attr "date"
-  recommendations_count:      DS.attr "number"
+  recommendations_count:      DS.attr "number",
+    defaultValue: 0
   posters:                    DS.attr()
   backdrops:                  DS.attr()
   curators:                   DS.hasMany "curator"
