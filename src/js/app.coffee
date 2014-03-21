@@ -133,11 +133,15 @@ App.ApplicationSerializer = DS.RESTSerializer.extend(
 App.Router.map ->
   @route "home"
 
+  @route "login"
+
   @resource "lineups",
     path: "/lineups"
 
   @resource "lineup", path: "/lineups/:lineup_id", ->
     @route "curators"
+
+  @route "lineup.new", path: "/lineups/new"
 
   @resource "medium", path: "/media/:medium_id"
 
@@ -146,7 +150,32 @@ App.Router.map ->
 # ROUTES
 # --------------------
 
-App.BaseRoute     = Ember.Route.extend()
+App.BaseRoute     = Ember.Route.extend
+  actions:
+    error: (reason, transition) ->
+      if reason.status == 401
+        @transitionTo "login"
+      else
+        console.error "Something went wrong", reason
+
+
+# ROUTES THAT REQUIRE A USER TO BE AUTH'D SHOULD
+# EXTEND FROM THIS
+App.AuthenticatedRoute = App.BaseRoute.extend
+
+  beforeModel: (transition) ->
+    if !@controllerFor('login').get "token"
+      @redirectToLogin()
+
+  redirectToLogin: (transition) ->
+    @controllerFor("login").set "attemptedTransition", transition
+    @transitionTo "login"
+
+
+App.ApplicationRoute = App.BaseRoute.extend
+  init: ->
+    @_super()
+    App.AuthManager = AuthManager.create()
 
 
 App.LoadMoreRoute = App.BaseRoute.extend
@@ -179,6 +208,11 @@ App.LineupRoute   = App.LoadMoreRoute.extend
   model: (params) ->
     @store.find "lineup", params.lineup_id
 
+App.LineupNewRoute = App.BaseRoute.extend
+  
+  setupController: (controller, model) ->
+    @controller.set 'model', @store.createRecord 'post'
+
 App.MediumRoute    = App.LoadMoreRoute.extend
   model: (params) ->
     console.log "HERE------------------------"
@@ -196,6 +230,30 @@ App.IndexRoute    = App.BaseRoute.extend
 App.LineupsController = Ember.ArrayController.extend
   sortProperties:   ['created_at']
   sortAscending:    false
+
+App.LineupNewController = Ember.ObjectController.extend
+
+  title: ''
+  
+  actions:
+    submitForm: ->
+      unless @get("title").length is 0
+        console.log "User wants to create a lineup with the title: #{@get 'title'}"
+        @store.createRecord "lineup",
+          title: @get "title"
+          # user:
+      else
+        alert "you must enter a title"
+
+App.LoginController = Ember.Controller.extend
+
+  token: localStorage.token
+  tokenChanged:(->
+    localStorage.token = @get "token"
+  ).property('token')
+
+  login: ->
+    console.log "Logging in!"
 
 
 # --------------------

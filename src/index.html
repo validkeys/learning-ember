@@ -42,6 +42,7 @@
 
   <!-- LINEUPS INDEX TEMPLATE -->
   <script type="text/x-handlebars" data-template-name="lineups">
+  {{#link-to 'lineup.new'}}New{{/link-to}}
     <h1>Lineups</h1>
     <ul>
     {{#each}}
@@ -56,9 +57,10 @@
   </script>
 
   <!-- LINEUPS CREATE TEMPLATE -->
-  <script type="text/x-handlebars" data-template-name="lineups.create">
+  <script type="text/x-handlebars" data-template-name="lineup/new">
     <h1>Create a lineup</h1>
     {{input name='title' value=title}}
+    <button {{action 'submitForm'}}>Create!</button> 
   </script>
 
   <!-- LINEUPS SHOW TEMPLATE -->
